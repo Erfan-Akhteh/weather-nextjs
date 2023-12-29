@@ -6,50 +6,49 @@ import { IoIosWater } from "react-icons/io";
 import { TiWeatherWindyCloudy } from "react-icons/ti";
 import { FaCompressAlt } from "react-icons/fa";
 const MainWeather = ({ data }: any) => {
-
   return (
     <div className="w-full h-fit flex justify-center mb-3 mt-3 pl-5 pr-5 ">
       <div className="w-[60rem] h-[28rem] bg-white p-2 rounded-2xl flex flex-row  ">
         <div className="w-1/2 h-full flex items-center justify-center flex-col  ">
           <div className="w-full h-fit pl-10 text-[2.8rem] mt-5 text-gray-700">
             {" "}
-            {data?.name}
+            {data?.city.name}
           </div>
           <div className="w-full h-fit pl-10 text-[2.8rem] mt-5 text-gray-700 flex  items-center">
             <Image
               src={
-                data?.weather[0]?.main === "Haze"
+                data?.list[0]?.main === "Haze"
                   ? "./haze.svg"
-                  : data?.weather[0]?.main === "Clouds"
+                  : data?.list[0]?.weather[0].main === "Clouds"
                   ? "./weather-svgrepo-com.svg"
-                  : data?.weather[0]?.main === "Snowy"
+                  : data?.list[0]?.weather[0].main === "Snowy"
                   ? "./snowy.svg"
-                  : data?.weather[0]?.main === "Windy"
+                  : data?.list[0]?.weather[0].main === "Windy"
                   ? "./windy.svg"
-                  : data?.weather[0]?.main === "Rain"
+                  : data?.list[0]?.weather[0].main === "Rain"
                   ? "./rainy.svg"
-                  : data?.weather[0]?.main === "Clear"
+                  : data?.list[0]?.weather[0].main === "Clear" &&
+                    data?.list[0].sys.pod === "d"
                   ? "./sunny.svg"
-                  : ""
+                  : "./moon.svg"
               }
               alt="weather"
               width={200}
               height={200}
             />
             <span className="text-[9rem] relative">
-              
-              {Math.floor(data.main.temp-273.15)}
+              {Math.floor(data.list[0].main.temp - 273.15)}
               <span className="text-[5rem] text-end absolute">o</span>
             </span>
           </div>
           <div className="w-full h-fit pl-10 text-[2.8rem] mt-5 text-gray-600 ">
             {" "}
-            {data?.weather[0]?.description}
+            {data?.list[0].weather[0]?.description}
           </div>
         </div>
         <div className="w-1/2 h-full flex items-center justify-center flex-col text-center gap-7 ">
           <div className="w-full h-fit pl-10 text-[2rem] mt-5 text-gray-600 relative">
-            Fells {Math.floor(data?.main?.feels_like -273.15)}
+            Fells {Math.floor(data?.list[0].main?.feels_like - 273.15)}
             <span className="text-[1rem]  absolute">o</span>
           </div>
           <div className="w-full h-fit pl-10 text-md mt-5 text-gray-600 flex flex-row justify-center">
@@ -58,7 +57,7 @@ const MainWeather = ({ data }: any) => {
                 <IoIosArrowRoundUp className="text-[2rem]" />
               </span>
               <span className="text-[2rem] relative">
-                {Math.floor(data?.main?.temp_max -273.15)}
+                {Math.floor(data?.list[0].main?.temp_max - 273.15)}
                 <span className="text-[1rem]  absolute">o</span>
               </span>
             </div>
@@ -67,7 +66,7 @@ const MainWeather = ({ data }: any) => {
                 <IoIosArrowRoundDown className="text-[2rem]" />
               </span>
               <span className="text-[2rem] relative">
-                {Math.floor(data?.main?.temp_min -273.15)}
+                {Math.floor(data?.list[0].main?.temp_min - 273.15)}
                 <span className="text-[1rem]  absolute">o</span>
               </span>
             </div>
@@ -82,7 +81,7 @@ const MainWeather = ({ data }: any) => {
               <span className="text-lg">Humbily</span>
             </div>
             <div className="h-fit w-1/4 flex items-center justify-center ">
-              <span className="text-lg">{data?.main?.humidity}%</span>
+              <span className="text-lg">{data?.list[0].main?.humidity}%</span>
             </div>
           </div>
           <div className="w-full h-fit pl-10 text-[1rem] mt-5 text-gray-600 flex flex-row justify-center">
@@ -95,7 +94,7 @@ const MainWeather = ({ data }: any) => {
               <span className="text-lg">Windy</span>
             </div>
             <div className="h-fit w-1/4 flex items-center justify-center ">
-              <span className="text-lg">{data?.wind?.speed}kph</span>
+              <span className="text-lg">{data?.list[0].wind?.speed}kph</span>
             </div>
           </div>
           <div className="w-full h-fit pl-10 text-[1rem] mt-5 text-gray-600 flex flex-row justify-center">
@@ -109,7 +108,7 @@ const MainWeather = ({ data }: any) => {
             </div>
             <div className="h-fit w-1/4 flex items-center justify-center ">
               <span className="text-lg">
-                {Math.floor(data?.main?.pressure / 10)}hPa
+                {Math.floor(data?.list[0].main?.pressure / 10)}hPa
               </span>
             </div>
           </div>

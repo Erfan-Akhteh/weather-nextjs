@@ -3,26 +3,29 @@ import React, { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import MainWeather from "../Main";
 import Forecase from "../Forecast";
+import toast, { Toaster } from "react-hot-toast";
+
 const Search = () => {
   const [value, setValue] = useState("");
   const [dataWeather, setDataWeather] = useState();
   const [forename, setForeName] = useState();
-  const fetchData =async () => {
-  await  fetch(
-      `http://api.openweathermap.org/data/2.5/weather?q=${value}&appid=e93b91375ee28cd99169751c1abd9335`
+  const fetchData = () => {
+    fetch(
+      `http://api.openweathermap.org/data/2.5/forecast?q=${value}&appid=e93b91375ee28cd99169751c1abd9335&cnt=4`
     )
       .then((res) => res.json())
       .then((data) => {
         setDataWeather(data);
-        setForeName(data.name);
-        setValue('')
-        
+        setForeName(data.list);
+        setValue("");
+        if (data.cod === "404") toast.error("Search agin please");
       })
-      .catch((error) => console.log(error));
+      .catch((err) => console.log(err));
   };
- console.log(dataWeather)
+
   return (
     <>
+      <Toaster />
       <div className="w-full h-24 flex items-center justify-center ">
         <div className="w-full h-14 flex justify-center  ">
           <span onClick={fetchData}>

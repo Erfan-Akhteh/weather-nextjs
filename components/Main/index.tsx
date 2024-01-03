@@ -1,11 +1,73 @@
 import Image from "next/image";
-import React from "react";
+import React, { ReactNode } from "react";
 import { IoIosArrowRoundUp } from "react-icons/io";
 import { IoIosArrowRoundDown } from "react-icons/io";
 import { IoIosWater } from "react-icons/io";
 import { TiWeatherWindyCloudy } from "react-icons/ti";
 import { FaCompressAlt } from "react-icons/fa";
-const MainWeather = ({ data }: any) => {
+
+interface WeatherRecord {
+  dt: number;
+  main: {
+    temp: number;
+    feels_like: number;
+    temp_min: number;
+    temp_max: number;
+    pressure: number;
+    sea_level: number;
+    grnd_level: number;
+    humidity: number;
+    temp_kf: number;
+  };
+  weather: {
+    id: number;
+    main: string;
+    description: string;
+    icon: string;
+  }[];
+  clouds: {
+    all: number;
+  };
+  wind: {
+    speed: number;
+    deg: number;
+    gust: number;
+  };
+  visibility: number;
+  pop: number;
+  sys: {
+    pod: string;
+  };
+  dt_txt: string;
+}
+
+interface CityInfo {
+  id: number;
+  name: string;
+  coord: {
+    lat: number;
+    lon: number;
+  };
+  country: string;
+  population: number;
+  timezone: number;
+  sunrise: number;
+  sunset: number;
+}
+
+interface WeatherData {
+  cod: string;
+  message: number;
+  cnt: number;
+  list: WeatherRecord[];
+  city: CityInfo;
+}
+
+interface Props {
+  data: WeatherData;
+}
+const MainWeather = ({ data }:Props) => {
+  console.log(data)
   return (
     <div className="w-full h-fit flex justify-center mb-3 mt-3 pl-5 pr-5 ">
       <div className="w-[60rem] h-[28rem] bg-white p-2 rounded-2xl flex flex-row  ">
@@ -17,7 +79,7 @@ const MainWeather = ({ data }: any) => {
           <div className="w-full h-fit pl-10 text-[2.8rem] mt-5 text-gray-700 flex  items-center">
             <Image
               src={
-                data?.list[0]?.main === "Haze"
+                data?.list[0]?.weather[0].main === "Haze"
                   ? "./haze.svg"
                   : data?.list[0]?.weather[0].main === "Clouds"
                   ? "./weather-svgrepo-com.svg"

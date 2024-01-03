@@ -5,10 +5,11 @@ import MainWeather from "../Main";
 import Forecase from "../Forecast";
 import toast, { Toaster } from "react-hot-toast";
 
+
 const Search = () => {
   const [value, setValue] = useState("");
   const [dataWeather, setDataWeather] = useState();
-  const [forename, setForeName] = useState();
+  const [forecase, setForecase] = useState();
   const fetchData = () => {
     fetch(
       `http://api.openweathermap.org/data/2.5/forecast?q=${value}&appid=e93b91375ee28cd99169751c1abd9335&cnt=4`
@@ -16,13 +17,13 @@ const Search = () => {
       .then((res) => res.json())
       .then((data) => {
         setDataWeather(data);
-        setForeName(data.list);
+        setForecase(data.list);
         setValue("");
         if (data.cod === "404") toast.error("Search agin please");
       })
       .catch((err) => console.log(err));
   };
-
+console.log(dataWeather)
   return (
     <>
       <Toaster />
@@ -40,11 +41,11 @@ const Search = () => {
           />
         </div>
       </div>
-      {dataWeather && forename ? (
+      {dataWeather && forecase ? (
         <>
           {" "}
           <MainWeather data={dataWeather} />
-          <Forecase forename={forename} />
+          <Forecase forecase={forecase} />
         </>
       ) : (
         ""

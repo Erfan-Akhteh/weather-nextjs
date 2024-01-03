@@ -1,14 +1,14 @@
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
 interface Props {
-  forename: string[];
+  forecase: string[];
 }
 
-const Forecase = ({ forename }: Props) => {
+
+const Forecase = ({ forecase }: Props) => {
   return (
     <div className="w-full h-fit flex justify-center flex-wrap mb-3 mt-3 pl-5 pr-5">
       <div className=" w-[60rem] h-[10rem] rounded-2xl flex flex-row   items-center p-1 gap-2">
-        {forename?.map((item: any) => (
+        {forecase?.map((item:any) => (
           <div
             key={crypto.randomUUID()}
             className="w-1/4 h-full  drop-shadow-md bg-white rounded-2xl"
